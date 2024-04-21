@@ -1,4 +1,4 @@
-#include "flight.hpp"
+#include "flight.h"
 
 int main() {
     FlightBookingSystem *fbs = new FlightBookingSystem();
