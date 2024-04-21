@@ -1,42 +1,27 @@
-#include <iostream>
-#include <fstream>
-#include <cstring>
-#include "myStack.h"
-using namespace std;
+#include "calculator.h"
 
+Calculator::Calculator() {
+    for (int i = 0; i < 26; ++i) {
+        variables[i].variableName = '\0';  // Initialize variableName to null character
+        variables[i].variableValue = 0;     // Initialize variableValue to 0
+    }
+    number = 0;
+    errorHandle = 1;
+}
 
-struct Pair{
+void Calculator::inverseElementsInStack() {
+    Stack<char> aux;
 
-    char variableName;
-    int variableValue;
-
-};
-
-class Calculator{
-
-    private:
-
-    Stack<char> expressionStack;
-    Pair variables[26];
-    int number;
-    bool errorHandle;
-
-    public:
-
-    void inverseElementsInStack(){
-        Stack<char> aux;
-
-        while(!expressionStack.isEmpty()){
-            aux.push(expressionStack.pop());
-        }
-
-        expressionStack = aux;
+    while(!expressionStack.isEmpty()){
+        aux.push(expressionStack.pop());
     }
 
-    void readInput(){
+    expressionStack = aux;
+}
 
+void Calculator::readInput() {
         fstream fin("input.txt");
-        fstream fout("output.txt");
+        ofstream fout("output.txt");
 
        char current, equal;
        int value;
@@ -82,10 +67,10 @@ class Calculator{
 
         fin.close();
         fout.close();
-    }
+}
 
-    int execute() {
-    fstream fout("output.txt");
+int Calculator::execute() {
+ofstream fout("output.txt");
 
     // Reverse the expressionStack if needed
     inverseElementsInStack();
@@ -190,9 +175,8 @@ class Calculator{
     return finalResult;
 }
 
-
-    void writeInput(){
-        int result;
+void Calculator::writeInput() {
+   int result;
 
         if(errorHandle == 1){
             result = execute();
@@ -200,31 +184,9 @@ class Calculator{
         if(errorHandle == 1){
             //not overwrite over the possible errors found;
 
-            fstream fout("output.txt");
+            ofstream fout("output.txt");
             fout << "Result = " << result << endl;
 
             fout.close();
         }
-    }
-
-    Calculator(){
-       
-       for (int i = 0; i < 26; ++i) {
-            variables[i].variableName = '\0';  // Initialize variableName to null character
-            variables[i].variableValue = 0;     // Initialize variableValue to 0
-       }
-        number = 0;
-        errorHandle = 1;
-    }
-
-};
-
-int main(){
-
-    Calculator calculator;
-
-    calculator.readInput();
-    calculator.writeInput();
-
-    return 0;
 }
