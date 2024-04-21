@@ -1,28 +1,28 @@
 #ifndef FLIGHT_HPP_
 #define FLIGHT_HPP_
 
+#include <iostream>
 #include <string>
 #include <list>
 
 #define SIZE 5
+#define FLIGHT_CAP 5
 
 struct Flight {
-    string name; //[SIZE];
-    bool status; //[SIZE];
+    std::string name[SIZE];
 };
 
 class FlightBookingSystem {
 private:
-    std::list<std::vector<Flight>> *flightList;
-    std::vector<Flight> f;
-    int g;
+    std::list<Flight> flights;
+    int flightCnt;
 public:
     FlightBookingSystem();
-    ~FlightBookingSystem();
-    void bookSeat(string passengerName);
+    void bookSeat(std::string passengerName);
+    void movePassengers();
     void cancelBooking(int seatIndex);
     void displaySystem();
-    string getPassenger(int seatIndex);
+    std::string getPassenger(int seatIndex);
 };
 
 #endif // FLIGHT_HPP_
